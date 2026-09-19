@@ -14,11 +14,11 @@ public class S03_CustomPolygonMesh : MonoBehaviour
             new Vector3(1f, 0.3f, 0f)
         };
 
-        int[] triangles = new int[]
+       int[] triangles = new int[]
         {
-            0, 1, 2,
-            0, 2, 3,
-            0, 3, 4
+            0, 2, 1,
+            0, 3, 2,
+            0, 4, 3
         };
 
         Mesh mesh = new Mesh();
