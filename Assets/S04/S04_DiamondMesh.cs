@@ -41,4 +41,4 @@ public class S04_DiamondMesh : MonoBehaviour
         GetComponent<MeshRenderer>().sharedMaterial =
             new Material(Shader.Find("Universal Render Pipeline/Lit"));
     }
-}
+}// S04 diamond mesh assignment finalized
