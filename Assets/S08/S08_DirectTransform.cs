@@ -24,20 +24,40 @@ public class S08_DirectTransform : MonoBehaviour
     Vector3 scale = new Vector3(2f, 1f, 1f);
 
     void Start()
+{
+    Vector3[] vertices;
+
+    if (demoMode == DemoMode.TranslateThenScale)
     {
-        Vector3[] vertices;
-
-        if (demoMode == DemoMode.TranslateThenScale)
-        {
-            vertices = TranslateThenScale(baseVertices);
-        }
-        else
-        {
-            vertices = ScaleThenTranslate(baseVertices);
-        }
-
-        Debug.Log(vertices[0]);
+        vertices = TranslateThenScale(baseVertices);
     }
+    else
+    {
+        vertices = ScaleThenTranslate(baseVertices);
+    }
+
+    int[] triangles =
+    {
+        0, 1, 2,
+        0, 2, 3,
+        0, 3, 4,
+        0, 4, 1,
+        5, 2, 1,
+        5, 3, 2,
+        5, 4, 3,
+        5, 1, 4
+    };
+
+    Mesh mesh = new Mesh();
+    mesh.vertices = vertices;
+    mesh.triangles = triangles;
+    mesh.RecalculateNormals();
+
+    GetComponent<MeshFilter>().mesh = mesh;
+
+    GetComponent<MeshRenderer>().material =
+        new Material(Shader.Find("Universal Render Pipeline/Lit"));
+}
 
     Vector3[] ApplyTranslation(Vector3[] vertices, Vector3 t)
     {
