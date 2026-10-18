@@ -25,8 +25,29 @@ public class S11_VirtualCamera_Finish : MonoBehaviour
     Texture2D canvas;                                             // 픽셀을 직접 칠하는 텍스처
     Color[] clearPixels;                                          // 캔버스를 지울 때 한 번에 채울 바탕색 배열
 
+    void AutoAssign()
+    {
+        if (targets == null || targets.Length == 0)
+        {
+            var all = FindObjectsByType<MeshFilter>(FindObjectsSortMode.None);
+            var found = new System.Collections.Generic.List<MeshFilter>();
+
+            foreach (var mf in all)
+            {
+                if (mf.name == "Diamond_Mesh" || mf.name == "Diamond_Moon_Mesh")
+                    found.Add(mf);
+            }
+
+            targets = found.ToArray();
+        }
+
+        if (canvasImage == null)
+            canvasImage = FindFirstObjectByType<RawImage>();
+    }
+
     void OnEnable()
     {
+        AutoAssign();
         CreateCanvas();                                           // 캔버스 텍스처를 만듦
         RenderPipelineManager.beginContextRendering += OnBeginRendering;  // 매 프레임, 화면을 그리기 직전에 호출되도록 등록
     }
