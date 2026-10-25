@@ -1,44 +1,45 @@
+
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class S04_DiamondMesh : MonoBehaviour
 {
-    void Start()
+    void Awake()
     {
-        Vector3[] vertices = new Vector3[]
+        Vector3[] vertices =
         {
-            new Vector3(0f, 1f, 0f),    // 0: 위
-            new Vector3(-1f, 0f, 0f),   // 1: 왼쪽
-            new Vector3(0f, 0f, 1f),    // 2: 앞
-            new Vector3(1f, 0f, 0f),    // 3: 오른쪽
-            new Vector3(0f, 0f, -1f),   // 4: 뒤
-            new Vector3(0f, -1f, 0f)    // 5: 아래
+            new Vector3(0f, 1f, 0f),
+            new Vector3(-1f, 0f, 0f),
+            new Vector3(0f, 0f, 1f),
+            new Vector3(1f, 0f, 0f),
+            new Vector3(0f, 0f, -1f),
+            new Vector3(0f, -1f, 0f)
         };
 
-        int[] triangles = new int[]
+        int[] triangles =
         {
-            // 위쪽 4개
-            0, 1, 2,
-            0, 2, 3,
-            0, 3, 4,
-            0, 4, 1,
-
-            // 아래쪽 4개
-            5, 2, 1,
-            5, 3, 2,
-            5, 4, 3,
-            5, 1, 4
+            0, 2, 1,
+            0, 3, 2,
+            0, 4, 3,
+            0, 1, 4,
+            5, 1, 2,
+            5, 2, 3,
+            5, 3, 4,
+            5, 4, 1
         };
 
         Mesh mesh = new Mesh();
-
+        mesh.name = "DiamondMesh";
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
+        mesh.RecalculateBounds();
 
-        GetComponent<MeshFilter>().mesh = mesh;
+        GetComponent<MeshFilter>().sharedMesh = mesh;
 
-        GetComponent<MeshRenderer>().sharedMaterial =
-            new Material(Shader.Find("Universal Render Pipeline/Lit"));
+        MeshRenderer renderer = GetComponent<MeshRenderer>();
+        renderer.sharedMaterial = new Material(
+            Shader.Find("Universal Render Pipeline/Lit")
+        );
     }
-}// S04 diamond mesh assignment finalized
+}
